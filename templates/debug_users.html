@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Utilisateurs enregistrés</h1>
+    <ul>
+        {% for user in users %}
+        <li>{{ user.username }} (ID: {{ user.id }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

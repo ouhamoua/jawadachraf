@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploration Animale | AnimalID</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="discovery-container">
+        <!-- En-tête -->
+        <div class="discovery-header">
+            <h1><i class="fas fa-binoculars"></i> Exploration Animale</h1>
+            <p>Découvrez les animaux autour de vous grâce à notre intelligence artificielle</p>
+        </div>
+
+        <!-- Zone de dépôt -->
+        <div class="upload-card">
+            <form id="upload-form" method="POST" enctype="multipart/form-data" class="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <input type="file" id="file" name="file" accept="image/*" class="file-input" required>
+                <label for="file" class="upload-label">
+                    <span class="browse-button">Parcourir les fichiers</span>
+                    ou glissez-déposez ici
+                </label>
+                <div class="file-info" id="file-info">Aucun fichier sélectionné</div>
+                <img id="preview" class="image-preview" src="" alt="Aperçu de l'image">
+            </form>
+        </div>
+
+        <!-- Bouton d'analyse -->
+        <button type="submit" form="upload-form" class="analyze-button" disabled>
+            <i class="fas fa-search"></i> Analyser l'image
+        </button>
+
+        <!-- Messages d'erreur -->
+        {% if error %}
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+        {% endif %}
+
+        <!-- Résultats -->
+        {% if predicted_class %}
+        <div class="results-card">
+            <!-- Résultat principal -->
+            <div class="main-result">
+                <div class="result-badge">
+                    <i class="fas fa-paw"></i>
+                    <span>Résultat</span>
+                </div>
+                <h2>{{ predicted_class }}</h2>
+                <div class="confidence-meter">
+                    <div class="meter-bar" style="width: {{ (probability * 100) | round(2) }}%"></div>
+                    <span>{{ (probability * 100) | round(2) }}% de confiance</span>
+                </div>
+            </div>
+
+            <!-- Caractéristiques -->
+            <div class="characteristics-section">
+                <h3><i class="fas fa-info-circle"></i> Caractéristiques</h3>
+                <div class="characteristics-grid">
+                    {% for key, value in characteristics.items() %}
+                    <div class="characteristic-item">
+                        <span class="char-key">{{ key.replace('_', ' ') | capitalize }}</span>
+                        <span class="char-value">{{ value }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Images similaires -->
+            <div class="similar-section">
+                <h3><i class="fas fa-images"></i> Galerie d'espèces similaires</h3>
+                <div class="similar-gallery">
+                    {% for img in similar_images %}
+                        <div class="similar-card">
+                            <img src="/static/{{ img }}" alt="Image similaire">
+                            <div class="similar-overlay">Voir plus</div>
+                        </div>
+                    {% else %}
+                        <p class="no-similar">Aucune image similaire disponible</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Bouton de retour -->
+        <a href="/" class="back-button">
+            <i class="fas fa-arrow-left"></i> Retour à l'accueil
+        </a>
+    </div>
+
+    <!-- Décorations -->
+    <div class="decor">
+        <img src="/static/images/decor/australian-shepherd.png" alt="Chien" class="decor-image top-left">
+        <img src="/static/images/decor/bernese-mountain.png" alt="Chien" class="decor-image top-right">
+        <img src="/static/images/decor/butterfly.png" alt="Papillon" class="decor-image bottom-left">
+        <img src="/static/images/decor/cat.png" alt="Chat" class="decor-image bottom-right">
+    </div>
+
+    <script>
+        // Aperçu de l'image
+        const fileInput = document.getElementById('file');
+        const preview = document.getElementById('preview');
+        const fileInfo = document.getElementById('file-info');
+        const analyzeBtn = document.querySelector('.analyze-button');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileInfo.textContent = file.name;
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+                analyzeBtn.disabled = false;
+            } else {
+                fileInfo.textContent = 'Aucun fichier sélectionné';
+                preview.style.display = 'none';
+                analyzeBtn.disabled = true;
+            }
+        });
+
+        // Glisser-déposer
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                fileInput.dispatchEvent(event);
+            }
+        });
+    </script>
+</body>
+</html>
