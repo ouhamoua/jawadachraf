@@ -1,0 +1,155 @@
+/* Styles de base */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    background-color: antiquewhite;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+header {
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 2rem;
+}
+
+/* Cartes d'options */
+.options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.option-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 280px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.icon-container {
+    background: linear-gradient(135deg, #3498db, #9b59b6);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 2rem;
+}
+
+.option-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.option-card p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.option-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3498db, #9b59b6);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.option-button:hover {
+    background: linear-gradient(135deg, #2980b9, #8e44ad);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Décors animaux */
+.decor-image {
+    position: absolute;
+    width: 150px;
+    opacity: 0.8;
+    z-index: 0;
+    transition: all 0.5s ease;
+}
+
+.decor-image:hover {
+    transform: scale(1.1) rotate(10deg);
+    opacity: 1;
+}
+
+.top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .decor-image {
+        width: 100px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
