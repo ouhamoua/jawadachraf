@@ -96,7 +96,7 @@ pillow==11.2.1
 platformdirs==3.10.0
 pluggy==1.2.0
 prometheus-client==0.21.1
-prompt-toolkit==3.0.38
+prompt-toolkit==3.0.41
 protobuf==5.29.4
 psutil==5.9.5
 pure-eval==0.2.3
