@@ -6,7 +6,9 @@ import io
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+import tensorflow as tf
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'votre_cle_secrete_ici'  # Nécessaire pour les sessions
